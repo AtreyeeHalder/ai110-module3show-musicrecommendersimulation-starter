@@ -32,9 +32,9 @@ class UserProfile:
 def score_song(user_prefs: Dict, song: Dict) -> Tuple[float, List[str]]:
     """
     Scores a song against a user's preferences using the Algorithm Recipe:
-      - Genre match:       +2.0 pts
+      - Genre match:       +1.0 pts  (halved from 2.0)
       - Mood match:        +1.5 pts
-      - Energy similarity: +0.0 to +1.5 pts (closer = more points)
+      - Energy similarity: +0.0 to +3.0 pts (doubled from 1.5; closer = more points)
       - Acoustic match:    +0.5 pts (only when user likes_acoustic and song is acoustic)
     Returns (total_score, reasons) so callers can explain the recommendation.
     """
@@ -42,15 +42,15 @@ def score_song(user_prefs: Dict, song: Dict) -> Tuple[float, List[str]]:
     reasons = []
 
     if song["genre"] == user_prefs["favorite_genre"]:
-        score += 2.0
-        reasons.append("genre match (+2.0)")
+        score += 1.0
+        reasons.append("genre match (+1.0)")
 
     if song["mood"] == user_prefs["favorite_mood"]:
         score += 1.5
         reasons.append("mood match (+1.5)")
 
     energy_diff = abs(song["energy"] - user_prefs["target_energy"])
-    energy_points = round((1.0 - energy_diff) * 1.5, 2)
+    energy_points = round((1.0 - energy_diff) * 3.0, 2)
     score += energy_points
     reasons.append(f"energy similarity (+{energy_points:.2f})")
 

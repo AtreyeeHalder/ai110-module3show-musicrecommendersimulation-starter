@@ -17,24 +17,48 @@ Replace this paragraph with your own summary of what your version does.
 
 ## How The System Works
 
-Real-world music recommenders not only look for songs that the user has heard before, but also their properties. They use these properties such as mood, genre, tempo etc. to evaluate why a user liked a certain song and then recommends other songs that generally share these properties. My system will prioritize how close a certain property is to a user's preferences rather than prioritizing which property consists of the largest score. For example, a song with energy closer to a user's target energy will be recommended more likely than the one with the most energy.
+Real-world music recommenders not only look for songs that the user has heard before, but also their properties. They use these properties or data features such as mood, genre, tempo etc. to evaluate why a user liked a certain song and then recommends other songs that generally share these properties. My system will prioritize how close a certain data feature is to a user's preferences rather than prioritizing which feature consists of the largest score. For example, a song with energy closer to a user's target energy will be recommended more likely than the one with the most energy.
 Each `Song` includes concrete features and general facts about the song like id, title, artist, genre, mood, energy, tempo_bpm, valence, danceability, and acousticness.
 Each `UserProfile` includes user's preferences such as favorite_genre, favorite_mood, target_energy, and likes_acoustic.
 The `Recommender` computes a score for each song by measuring how closely its genre, mood, energy, valence, and acousticness match the user's profile, combines those into a weighted total between 0 and 1, then returns the top songs with the highest scores.
 
-![Mermaid.js flowchart to visualize design](image.png)
+![Mermaid.js flowchart to visualize design](img/image.png)
 
-Algorithm Recipe:
+**Algorithm Recipe:**
 Genre will carry the most weight since it is the strongest signal determined by a listener's identity (+2.0 points).
 Mood is weighted second because it represents the user's current context and why they are listening to a certain song during a certain event in their life (+1.5 points).
 Energy similarity (+0.0 to +1.5 points) is calculated based on how close a song's energy is to the user's target energy, and acousticness (+0.5 points) is considered only if a user prefers acoustic songs.
 
-Potential Biases:
+**Potential Biases:**
 Sometimes, the mood and energy of a user may be more important to them than the genre. However, since genre has the highest weight, a song meeting the user's mood and energy requirements but in a different genre may not be recommended to the user even though they may prefer this option more. Additionally, there are only a few songs in the catalog, so the top result may not be ideal for the user.
 
-CLI terminal output showing recommendations:
-![CLI recommendations](image-1.png)
-![CLI recommendations 2](image-2.png)
+**CLI terminal output showing recommendations:**
+
+![CLI recommendations](img/image-1.png)
+![CLI recommendations 2](img/image-2.png)
+
+**Stress Test with Diverse Profiles:**
+
+-- Standard Profiles (High-Energy Pop, Chill Lofi, Deep Intense Rock) --
+
+![High-Energy Pop #1-4](img/image-3.png)
+![High-Energy Pop #5 and Chill Lofi #1-2](img/image-4.png)
+![Chill Lofi #3-5](img/image-5.png)
+![Deep Intense Rock #1-4](img/image-6.png)
+![Deep Intense Rock #5](img/image-7.png)
+
+-- Adversarial Profiles --
+
+![Conflicting Energy+Mood #1-4](img/image-8.png)
+![Conflicting Energy+Mood #5](img/image-9.png)
+![Impossible Genre #1-3](img/image-10.png)
+![Impossible Genre #4-5](img/image-11.png)
+![Neutral Energy #1-4](img/image-12.png)
+![Neutral Energy #5](img/image-13.png)
+![Acoustic+EDM Mismatch #1-4](img/image-14.png)
+![Acoustic+EDM Mismatch #5](img/image-15.png)
+![Perfect-Score Bait #1-3](img/image-16.png)
+![Perfect-Score Bait #4-5](img/image-17.png)
 
 ---
 
