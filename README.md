@@ -32,6 +32,10 @@ Energy similarity (+0.0 to +1.5 points) is calculated based on how close a song'
 Potential Biases:
 Sometimes, the mood and energy of a user may be more important to them than the genre. However, since genre has the highest weight, a song meeting the user's mood and energy requirements but in a different genre may not be recommended to the user even though they may prefer this option more. Additionally, there are only a few songs in the catalog, so the top result may not be ideal for the user.
 
+CLI terminal output showing recommendations:
+![CLI recommendations](image-1.png)
+![CLI recommendations 2](image-2.png)
+
 ---
 
 ## Getting Started
